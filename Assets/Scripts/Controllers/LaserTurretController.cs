@@ -46,6 +46,6 @@ public class LaserTurretController : MonoBehaviour {
 
     private void Shoot()
     {
-        GameObject shot = Instantiate(Laser, LaserSpawner.position, Cannon.transform.rotation);
+        Instantiate(Laser, LaserSpawner.position, Cannon.transform.rotation);
     }
 }

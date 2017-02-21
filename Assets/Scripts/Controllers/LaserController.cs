@@ -22,7 +22,6 @@ public class LaserController : MonoBehaviour {
     {
         if (collision.collider.tag == "Asteroid")
         {
-            Debug.Log("Destruction !!");
             Destroy(collision.collider.gameObject);
             Destroy(this.gameObject);
         }
