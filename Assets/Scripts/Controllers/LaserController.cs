@@ -20,13 +20,11 @@ public class LaserController : MonoBehaviour {
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collision !");
-        Debug.Log("Collider :");
-        Debug.Log(collision.collider);
         if (collision.collider.tag == "Asteroid")
         {
-            Destroy(collision.collider);
-            Destroy(this);
+            Debug.Log("Destruction !!");
+            Destroy(collision.collider.gameObject);
+            Destroy(this.gameObject);
         }
     }
 }
