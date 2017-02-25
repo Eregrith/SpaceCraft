@@ -3,8 +3,7 @@
 public class AsteroidController : MonoBehaviour {
 
     private float RotationSpeed { get; set; }
-    private Vector3 Movement { get; set; }
-    public Sprite[] Sprites;
+    private Vector2 Movement;
     public GameObject PickupSpawned;
     public int MinimumSpawn;
     public int MaximumSpawn;
@@ -12,19 +11,30 @@ public class AsteroidController : MonoBehaviour {
     void Start () {
         RotationSpeed = Random.Range(-90f, 90f);
         transform.Rotate(0, 0, 500*RotationSpeed);
-        GetComponent<SpriteRenderer>().sprite = Sprites[Random.Range(0, Sprites.Length)];
-        Movement = new Vector3(Random.Range(-1f, 1f), Random.Range(-1f, 1f), 0);
+        Movement = new Vector3(Random.Range(-30f, 30f), Random.Range(-30f, 30f), 0);
+        this.GetComponent<Rigidbody2D>().AddForce(Movement);
     }
 	
 	void Update ()
     {
-        transform.Translate(Movement.x * Time.deltaTime, Movement.y * Time.deltaTime, 0, Space.World);
-        transform.Rotate(Vector3.forward, RotationSpeed * Time.deltaTime, Space.Self);
+        //transform.Rotate(Vector3.forward, RotationSpeed * Time.deltaTime, Space.Self);
 	}
 
     private void OnDestroy()
     {
         //SpawnResources();
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Asteroid")
+        {
+            Debug.Log("Sticking !" + Time.time);
+            FixedJoint2D joint = this.gameObject.AddComponent<FixedJoint2D>();
+            joint.connectedBody = collision.gameObject.GetComponent<Rigidbody2D>();
+            joint.anchor = transform.InverseTransformPoint(collision.contacts[0].point);
+            joint.connectedAnchor = collision.gameObject.transform.InverseTransformPoint(collision.contacts[0].point);
+        }
     }
 
     private void SpawnResources()
