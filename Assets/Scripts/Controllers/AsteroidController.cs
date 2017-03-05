@@ -2,17 +2,11 @@
 
 public class AsteroidController : MonoBehaviour {
 
-    private float RotationSpeed { get; set; }
-    private Vector2 Movement;
     public GameObject PickupSpawned;
     public int MinimumSpawn;
     public int MaximumSpawn;
 
     void Start () {
-        RotationSpeed = Random.Range(-90f, 90f);
-        transform.Rotate(0, 0, 500*RotationSpeed);
-        Movement = new Vector3(Random.Range(-30f, 30f), Random.Range(-30f, 30f), 0);
-        this.GetComponent<Rigidbody2D>().AddForce(Movement);
     }
 	
 	void Update ()
